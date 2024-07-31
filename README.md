@@ -37,7 +37,7 @@ To classify new images, use the trained model as demonstrated in the notebook.
 The model achieved high accuracy on the test set by leveraging various data augmentation and regularization techniques. Detailed results and performance metrics are provided in the notebook.
 # Contributors
 This project was given by **Machine Learning 1 Pvt Limited** and created by a team of members:
-Majid Hanif
+**Majid Hanif**
 Usama Shafeeq (Team Lead)
 Ammar Rizwan
 Muhammad Shahzaib

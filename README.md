@@ -39,8 +39,11 @@ The model achieved high accuracy on the test set by leveraging various data augm
 This project was given by **Machine Learning 1 Pvt Limited** and created by a team of members:
 
 Majid Hanif
+
 Usama Shafeeq (Team Lead)
+
 Ammar Rizwan
+
 Muhammad Shahzaib
 
 # License

@@ -1,50 +1,77 @@
-# Fruits Classifier
-This repository contains a fruits classification project using TensorFlow and Keras. The model is trained to classify images of four types of fruits: apples, bananas, mangoes, and oranges. The dataset includes 800 images, with 640 used for training and 160 for testing. Various techniques such as dropout, data augmentation, and regularization are applied to improve the model's accuracy. MobileNet settings are utilized in the custom model for efficient performance.
-# Requirements
-Python 3.x
-TensorFlow
-Keras
-NumPy
-Pandas
-OpenCV
-Jupyter Notebook
-Installation
+# Fruit Classification with CNN
 
-# Clone the repository:
+An image-classification project that trains a custom convolutional neural network (TensorFlow/Keras) to recognise four fruits — apple, banana, mango, and orange — and then investigates and fixes the model's mistakes. The notebook covers the full workflow: exploring the data, training the CNN, evaluating it with a confusion matrix, diagnosing a systematic misclassification, expanding the dataset to correct it, and retraining.
 
+## Key Features
 
+- **Custom CNN** — three Conv2D/MaxPooling blocks (32, 64, 128 filters), Flatten, Dense(128) → Dense(64) → Dropout(0.3) → 4-way softmax; trained with Adam and sparse categorical cross-entropy.
+- **Dataset included** — `fruit_dataset.zip` with `Train/` and `Test/` folders, 4 classes.
+- **Error analysis** — the notebook inspects the confusion matrix and finds that green fruits are systematically misclassified as apple (the apple class contains green apples, while the other classes contain only ripe-coloured fruit).
+- **Dataset correction and retraining** — 50 greenish images per class are added to the training set and 14 per class to the test set, an L2 regulariser is added, and the model is retrained with checkpointing of the best model (`best_model.h5`).
+- **Single-image prediction** — a `predict_and_plot_image` helper loads the saved model and classifies one image file, showing the actual vs. predicted label.
+
+## Dataset
+
+- Source: `fruit_dataset.zip` (included in the repo), extracted by the notebook.
+- **Original split:** 800 images — 640 train / 160 test. A 10% validation split of the training data gives 576 train / 64 validation / 160 test.
+- **After adding green-fruit images:** 840 train files / 216 test files → 776 train / 64 validation / 216 test.
+- Images are 256 × 256, batch size 32, pixel values normalised to [0, 1].
+
+## Results
+
+Both runs are recorded in the notebook (test-set evaluation after training):
+
+| Run | Test accuracy | Test loss |
+| --- | --- | --- |
+| First model (up to 40 epochs, early stopping patience 5) | 0.775 | 2.036 |
+| Retrained model (up to 100 epochs, + L2 regularisation, checkpointed best model) | 0.625 | 2.694 |
+
+The retrained model scores lower on the expanded test set, which now includes the harder green-fruit cases; the notebook notes remaining confusion, mainly between mango and banana, and suggests more data and augmentation as the next improvement.
+
+## Tech Stack
+
+- **Python**, **Jupyter Notebook** (Google Colab)
+- **TensorFlow / Keras** — custom CNN, `image_dataset_from_directory`, EarlyStopping, ModelCheckpoint
+- **NumPy, Pandas, OpenCV**
+- **Matplotlib, Seaborn** — data distribution plots, training curves, confusion matrix
+- **scikit-learn** — confusion matrix
+
+## How to Run
+
+```bash
 git clone https://github.com/majidhanif230/Fruit_Classification_CNN.git
-
 cd Fruit_Classification_CNN
-# Create a virtual environment and activate it:
-
-
-python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-# Install the required packages:
-
-
 pip install -r requirements.txt
-# Usage
-Open the Jupyter Notebook:
+```
 
-jupyter notebook Fruits_Classifier.ipynb
-Follow the steps in the notebook to train the model and evaluate its performance.
+1. Open `Fruits_Classifier.ipynb` in Jupyter (or Google Colab) and run the cells in order. The notebook unzips `fruit_dataset.zip` itself.
+2. Follow the notebook to train the model, evaluate it, and run the single-image predictor on `best_model.h5`.
 
-To classify new images, use the trained model as demonstrated in the notebook.
+## Project Structure
 
-# Results
-The model achieved high accuracy on the test set by leveraging various data augmentation and regularization techniques. Detailed results and performance metrics are provided in the notebook.
-# Contributors
-This project was given by **Machine Learning 1 Pvt Limited** and created by a team of members:
+```
+Fruit_Classification_CNN/
+├── Fruits_Classifier.ipynb   # EDA, custom CNN training, confusion matrix,
+│                             # error analysis, dataset expansion, retraining,
+│                             # single-image prediction
+├── fruit_dataset.zip         # Fruit image dataset (Train/ and Test/)
+├── requirements.txt          # TensorFlow, Keras, NumPy, Pandas, OpenCV
+└── README.md
+```
 
-Majid Hanif
+## Contributors
 
-Usama Shafeeq (Team Lead)
+Project given by **Machine Learning 1 Pvt Ltd** and created by:
 
-Ammar Rizwan
+- Majid Hanif
+- Usama Shafeeq (Team Lead)
+- Ammar Rizwan
+- Muhammad Shahzaib
 
-Muhammad Shahzaib
+## Author
 
-# License
-This project is free to use. See the LICENSE file for details.
+**Majid Hanif** — AI Engineer · BS Artificial Intelligence, The Islamia University of Bahawalpur (CGPA 3.81/4.0)
+
+- Portfolio: https://snap-portfolio-me.lovable.app/portfolio
+- LinkedIn: https://www.linkedin.com/in/majid-hanif-23720b2a2/
+- GitHub: https://github.com/majidhanif230
